@@ -1,0 +1,11 @@
+{
+  "name": "authcontentserver",
+  "version": "1.0.0",
+  "description": "authenticate users and serves content",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "author": "maheshtiria",
+  "license": "ISC"
+}
