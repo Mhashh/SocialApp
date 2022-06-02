@@ -58,5 +58,7 @@ userSchema.virtual('password').set(function(password){
     return this._password;
 })
 
+module.exports = mongoose.model('user',userSchema);
+
 
 
