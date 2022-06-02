@@ -12,7 +12,7 @@ require('dotenv').config();//allows env config file to be used
 //web specific
 
 //route imports
-
+const authroutes = require('./routes/authenticate')
 //route imports
 
 //development specific
@@ -27,7 +27,9 @@ if(process.env.NODE_ENV == 'development'){
     app.use(cors({origin:'http://localhost:3000'}));
 }
 
-mongoose.connect(process.env.DB_CONN_STRING
+mongoose.connect(process.env.DB_CONN_STRING,{
+    useNewUrlParser: true
+}
     ).then(
         ()=>console.log("DB connected")
     ).catch(
@@ -35,7 +37,7 @@ mongoose.connect(process.env.DB_CONN_STRING
     )
 
 //adding imported routes
-    
+app.use('/socialappapi',authroutes);
 //adding imported routes
 
 
