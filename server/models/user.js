@@ -21,7 +21,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        salt:String,
+        friendlist:{
+            type:[String],
+        }
+        ,salt:String,
         role: {
             type: String,
             default: 'user'
