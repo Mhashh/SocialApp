@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 
 exports.signup = function(req,res){
-    //destructure response body
+    //destructure request body
     const {username,email,password} = req.body;
     //check for email existing
     user.findOne({email}).exec(function(err,user){
@@ -21,6 +21,8 @@ exports.signup = function(req,res){
             });
     }})
     
+    //very helpful link :)
+    //https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
     //creating a jwt token
     const token = jwt.sign({username,email,password},process.env.JWT_AUTH_SECRET,{expiresIn:'15m'});
     
