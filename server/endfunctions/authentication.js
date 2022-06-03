@@ -1,5 +1,6 @@
 const user = require('../models/user')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
 
 exports.signup = function(req,res){
     //destructure response body
@@ -19,10 +20,37 @@ exports.signup = function(req,res){
               error: "username is taken",
             });
     }})
-
+    
     //new details to save in db
     const newuser = new user({username,email,password})
     
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: process.env.MAIL_USERNAME,
+          pass: process.env.MAIL_PASSWORD,
+          clientId: process.env.OAUTH_CLIENTID,
+          clientSecret: process.env.OAUTH_CLIENT_SECRET,
+          refreshToken: process.env.OAUTH_REFRESH_TOKEN
+        }
+      });
+
+      let mailOptions = {
+        from: "054maheshtiria@gmail.com",
+        to: `${email}`,
+        subject: 'Chatcafe account activation',
+        text: 'Hi from your chatcafe project'
+      };
+
+      transporter.sendMail(mailOptions, function(err, data) {
+        if (err) {
+          console.log("Error " + err);
+        } else {
+          console.log("Email sent successfully");
+        }
+      });
+
     //save in db
     newuser.save((err,newuser)=>{
         if(err){
