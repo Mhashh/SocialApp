@@ -40,7 +40,7 @@ exports.signup = function(req,res){
       });
 
       let mailOptions = {
-        from: "054maheshtiria@gmail.com",
+        from: `${process.env.MAIL_USERNAME}`,
         to: `${email}`,
         subject: 'Moretalk account activation',
         html: `
@@ -135,6 +135,7 @@ exports.signin = function(req,res){
         const username = olduser.username;
         const id = olduser.id
         //sending username and detail
+        console.log(username)
         return res.json({
             token,
             user:{id,username,email}
