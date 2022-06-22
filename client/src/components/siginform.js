@@ -1,10 +1,13 @@
 import React from 'react'
 import axios from 'axios'
+import {authenticate} from '../helpers/storagefunctions'
+import { useNavigate } from 'react-router-dom'
 
-class SigninForm extends React.Component{
 
-    constructor(){
-        super()
+class SigninFormComponent extends React.Component{
+
+    constructor(props){
+        super(props)
         this.state={
             password:"",
             email:"",
@@ -25,8 +28,8 @@ class SigninForm extends React.Component{
         console.log(this.state.password)
     }
 
-    handleOnPost(event) {
 
+    handleOnPost(event) {
         event.preventDefault()
         axios({
                 method:'POST',
@@ -34,9 +37,13 @@ class SigninForm extends React.Component{
                 data:{email:`${this.state.email}`,password:`${this.state.password}`}
             }
         ).then((response) => {
-            console.log(response.data);
+            authenticate(response,
+                setTimeout(function() { //Start the timer
+                    this.props.navigate('/')
+                }.bind(this), 1000)
+                
+            )
           }).catch((err)=>{
-            console.error(err)
           });
       }
     
@@ -72,4 +79,8 @@ class SigninForm extends React.Component{
     }
 }
 
-export default SigninForm
+export default function SigninForm(){
+    const navigation = useNavigate();
+
+     return <SigninFormComponent navigate={navigation} />;
+}

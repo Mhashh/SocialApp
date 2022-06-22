@@ -33,10 +33,28 @@ export function authenticate(response,next){
 //check for login/signin
 export function isSignedIn(){
     var authtoken = jscookie.get('token')
-    if(authtoken === null){
+    var username = localStorage.getItem('username')
+    var id = localStorage.getItem('id')
+    var email= localStorage.getItem('email')
+    if(authtoken === null || username=== null || id=== null || email=== null){
         return false
     }else{
         return true
     }
+}
+
+//name extraction
+export function getUserName(){
+    return localStorage.getItem('username')
+}
+
+//remove cookie and local storage info 
+export function logout(){
+    
+    jscookie.remove('usertoken')
+    localStorage.removeItem('id')
+    localStorage.removeItem('username')
+    localStorage.removeItem('email')
+
 }
 
